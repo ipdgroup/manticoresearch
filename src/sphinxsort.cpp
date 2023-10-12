@@ -1639,6 +1639,7 @@ GROUPER_BEGIN_SPLIT ( CSphGrouperDay )
 	return (tSplit.tm_year+1900)*10000 + (1+tSplit.tm_mon)*100 + tSplit.tm_mday;
 GROUPER_END
 
+#if 0
 GROUPER_BEGIN_SPLIT ( CSphGrouperWeek )
 	int iPrevSunday = (1+tSplit.tm_yday) - tSplit.tm_wday; // prev Sunday day of year, base 1
 	int iYear = tSplit.tm_year+1900;
@@ -1654,6 +1655,11 @@ GROUPER_BEGIN_SPLIT ( CSphGrouperWeek )
 	}
 	return iYear*1000 + iPrevSunday;
 GROUPER_END
+#else
+GROUPER_BEGIN_SPLIT ( CSphGrouperWeek )  // CSphGrouperHour in fact.
+	return (tSplit.tm_year+1900)*1000000 + (1+tSplit.tm_mon)*10000 + tSplit.tm_mday*100 + tSplit.tm_hour;
+GROUPER_END
+#endif
 
 GROUPER_BEGIN_SPLIT ( CSphGrouperMonth )
 	return (tSplit.tm_year+1900)*100 + (1+tSplit.tm_mon);
@@ -1673,6 +1679,7 @@ GROUPER_BEGIN_SPLIT_UTC ( CSphGrouperDayUtc )
 		return (tSplit.tm_year + 1900) * 10000 + (1 + tSplit.tm_mon) * 100 + tSplit.tm_mday;
 GROUPER_END
 
+#if 0
 GROUPER_BEGIN_SPLIT_UTC ( CSphGrouperWeekUtc )
 		int iPrevSunday = (1 + tSplit.tm_yday) - tSplit.tm_wday; // prev Sunday day of year, base 1
 		int iYear = tSplit.tm_year + 1900;
@@ -1688,6 +1695,12 @@ GROUPER_BEGIN_SPLIT_UTC ( CSphGrouperWeekUtc )
 		}
 		return iYear * 1000 + iPrevSunday;
 GROUPER_END
+#else
+GROUPER_BEGIN_SPLIT_UTC ( CSphGrouperWeekUtc )  // CSphGrouperHourUtc in fact.
+	return (tSplit.tm_year+1900)*1000000 + (1+tSplit.tm_mon)*10000 + tSplit.tm_mday*100 + tSplit.tm_hour;
+GROUPER_END
+#endif
+
 
 GROUPER_BEGIN_SPLIT_UTC ( CSphGrouperMonthUtc )
 		return (tSplit.tm_year + 1900) * 100 + (1 + tSplit.tm_mon);
